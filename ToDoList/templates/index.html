@@ -15,14 +15,31 @@
             <button type="submit">Add</button>
         </form>
 
+                <h2>Pending Tasks</h2>
         <ul class="todo-list">
             {% for todo in todos %}
-                <li class="{% if todo.done %}done{% endif %}">
-                    <a href="{{ url_for('complete_task', todo_id=todo.id) }}" class="status-btn"></a>
-                    <span class="task-text">{{ todo.task }}</span>
-                    <a href="{{ url_for('edit_task', todo_id=todo.id) }}" class="edit-btn">Edit</a>
-                    <a href="{{ url_for('delete_task', todo_id=todo.id) }}" class="delete-btn">Delete</a>
-                </li>
+                {% if not todo.done %}
+                    <li>
+                        <a href="{{ url_for('complete_task', todo_id=todo.id) }}" class="status-btn"></a>
+                        <span class="task-text">{{ todo.task }}</span>
+                        <a href="{{ url_for('edit_task', todo_id=todo.id) }}" class="edit-btn">Edit</a>
+                        <a href="{{ url_for('delete_task', todo_id=todo.id) }}" class="delete-btn">Delete</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <h2>Completed Tasks</h2>
+        <ul class="todo-list">
+            {% for todo in todos %}
+                {% if todo.done %}
+                    <li class="done">
+                        <a href="{{ url_for('complete_task', todo_id=todo.id) }}" class="status-btn"></a>
+                        <span class="task-text">{{ todo.task }}</span>
+                        <a href="{{ url_for('edit_task', todo_id=todo.id) }}" class="edit-btn">Edit</a>
+                        <a href="{{ url_for('delete_task', todo_id=todo.id) }}" class="delete-btn">Delete</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
